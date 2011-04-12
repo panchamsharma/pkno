@@ -1,0 +1,32 @@
+<?php
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('Personal Knowledge');
+echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<?php echo $this->headMeta(); ?>
+<?php echo $this->headTitle(); ?>
+<?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?>
+</head>
+<body>
+<p>Personal Knowledge</p>
+<table>
+<tr>
+<td>
+<div id="navigation">
+<br/> <a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'));?>">Add a new album</a>
+<br/> <a href="<?php echo $this->url(array('controller'=>'index','action'=>'index'));?>">View all albums</a>
+</div>
+</td>
+<td>
+<div id="content">
+<h1><?php echo $this->escape($this->title); ?></h1>
+<?php echo $this->layout()->content; ?>
+</div>
+</td>
+</tr>
+</table>
+<p>All rights reserved</p>
+</body>
+</html>

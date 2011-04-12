@@ -1,0 +1,60 @@
+body,html 
+{
+  margin: 0 5px;
+  font-family: Verdana,sans-serif;
+}
+
+h1 
+{ 
+  font-size: 1.2em;
+  color: #0000CD;
+}
+
+a  
+{
+  color: #0000CD;
+}
+
+p
+{ 
+ background-color: 	#C0C0C0;
+}
+
+/* Table */
+table
+{
+    border-color: #600;
+    border-width: 0 0 1px 1px;
+    border-style: solid;
+}
+
+th 
+{
+  text-align: left;
+}
+
+td, th 
+{
+  padding-right: 5px;
+  vertical-align: top;
+  border-color: #600;
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+  margin: 0;
+  padding: 4px;  
+}
+
+/* style form */
+form dt {
+width: 100px;
+display: block;
+float: left;
+clear: left;
+}
+form dd {
+margin-left: 0;
+float: left;
+}
+form #submitbutton {
+margin-left: 100px;
+}
