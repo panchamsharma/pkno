@@ -1,0 +1,29 @@
+<table>
+<tr>
+    <th>Add knowledge</th>
+    <th>Recent items</th>
+</tr>
+<tr>
+    <td>
+        <?php echo $this->form; ?>
+    </td>
+    <td>
+        <?php foreach($this->knowledge as $knowledge) : ?>
+            <br/><?php echo $this->escape($knowledge->knowledge);?>
+        <?php endforeach; ?>
+        <br/><hr/>Tag cloud
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        <br/> TODO:
+        <br/> add knowledge form goes here
+        <br/> use ajax to submit content
+        <br/> use rich text editor
+        <br/> allow for content tagging
+        <br/> available tag cloud should be displayed?
+        <br/> tags entered in a text box and delimited by comma(?)
+        <br/> google suggest style tag options
+    </td>
+</tr>
+</table>
