@@ -9,9 +9,15 @@ class Application_Form_Knowledge extends Zend_Form
         $this->setMethod('post');
 
         // Add the comment element
-        $this->addElement('textarea', 'comment', array(
-            'label'      => 'Add Knowledge:',
+        $this->addElement('textarea', 'knowledge', array(
+            'label'      => 'Content',
             'required'   => true,
+         ));
+
+        // Add the tags element
+        $this->addElement('text', 'tags', array(
+            'label'      => 'Tags',
+            'required'   => false,
          ));
 
         // Add the submit button

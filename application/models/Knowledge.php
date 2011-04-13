@@ -67,9 +67,21 @@ class Application_Model_Knowledge
         return $this->_tags;
     }
 
+    public function setCreated($created)
+    {
+        $this->_created = $created;
+        return $this;
+    }
+
     public function getCreated()
     {
         return $this->_created;
+    }
+
+    public function setModified($modified)
+    {
+        $this->_modified = $modified;
+        return $this;
     }
 
     public function getModified()

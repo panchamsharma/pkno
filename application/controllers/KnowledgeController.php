@@ -10,11 +10,11 @@ class KnowledgeController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        //get request object
-        $request = $this->getRequest();
+       //get request object
+       $request = $this->getRequest();
 
-        //set the form to be displayed
-       $form    = new Application_Form_Knowledge();
+       //set the form to be displayed
+       $form = new Application_Form_Knowledge();
       
        //if it is a post, then process data and redirect back to index
        if ($this->getRequest()->isPost()) {
@@ -30,8 +30,8 @@ class KnowledgeController extends Zend_Controller_Action
        $this->view->form = $form;
 
        //fetch current knowledge
-       $knowledge = new Application_Model_DbTable_Knowledge();
-       $this->view->knowledge = $knowledge->fetchAll();
+       $mapper = new Application_Model_KnowledgeMapper();
+       $this->view->knowledge = $mapper->fetchAll();
     }
 }
 

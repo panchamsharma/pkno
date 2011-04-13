@@ -3,9 +3,10 @@
 class Application_Model_KnowledgeMapper
 {
 
-    protected $_dbTable;
+    protected $_dbTable_Knowledge;
+    protected $_dbTable_Tags;
 
-    public function setDbTable($dbTable)
+    public function setDbTableKnowledge($dbTable)
     {
         if (is_string($dbTable)) {
             $dbTable = new $dbTable();
@@ -13,16 +14,36 @@ class Application_Model_KnowledgeMapper
         if (!$dbTable instanceof Zend_Db_Table_Abstract) {
             throw new Exception('Invalid table data gateway provided');
         }
-        $this->_dbTable = $dbTable;
+        $this->_dbTable_Knowledge = $dbTable;
         return $this;
     }
 
-    public function getDbTable()
+    public function getDbTableKnowledge()
     {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Guestbook');
+        if (null === $this->_dbTable_Knowledge) {
+            $this->setDbTableKnowledge('Application_Model_DbTable_Knowledge');
         }
-        return $this->_dbTable;
+        return $this->_dbTable_Knowledge;
+    }
+
+    public function setDbTableTags($dbTable)
+    {
+        if (is_string($dbTable)) {
+            $dbTable = new $dbTable();
+        }
+        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+            throw new Exception('Invalid table data gateway provided');
+        }
+        $this->_dbTable_Tags = $dbTable;
+        return $this;
+    }
+
+    public function getDbTableTags()
+    {
+        if (null === $this->_dbTable_Tags) {
+            $this->setDbTableTags('Application_Model_DbTable_Tags');
+        }
+        return $this->_dbTable_Tags;
     }
 
     public function save(Application_Model_Knowledge $knowledge)
@@ -35,15 +56,25 @@ class Application_Model_KnowledgeMapper
 
         if (null === ($id = $knowledge->getId())) {
             unset($data['id']);
-            $this->getDbTable()->insert($data);
+            $this->getDbTableKnowledge()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('id = ?' => $id));
+            $this->getDbTableKnowledge()->update($data, array('id = ?' => $id));
+        }
+
+        if ($knowledge->getTags() != null) {
+            $data_tags = array(
+               'knowledge_id' => "1",
+                'tag' => $knowledge->getTags(),
+                'created' => date('Y-m-d H:i:s'),
+            );
+
+            $this->getDbTableTags()->insert($data_tags);
         }
     }
 
     public function find($id, Application_Model_Knowledge $knowledge)
     {
-        $result = $this->getDbTable()->find($id);
+        $result = $this->getDbTableKnowledge()->find($id);
         if (0 == count($result)) {
             return;
         }
@@ -56,7 +87,7 @@ class Application_Model_KnowledgeMapper
 
     public function fetchAll()
     {
-        $resultSet = $this->getDbTable()->fetchAll();
+        $resultSet = $this->getDbTableKnowledge()->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new Application_Model_Knowledge();
