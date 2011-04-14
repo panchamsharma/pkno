@@ -7,8 +7,9 @@ class Application_Model_Knowledge
     protected $_created;
     protected $_modified;
     protected $_tags;
+    protected $_tags_tokenized;
 
-     public function __construct(array $options = null)
+    public function __construct(array $options = null)
     {
         if (is_array($options)) {
             $this->setOptions($options);
@@ -58,13 +59,20 @@ class Application_Model_Knowledge
 
     public function setTags($tags)
     {
-        $this->_tags = (string) $tags;
+        $this->_tags = trim((string) $tags);
+        //split the delimited tags into an array
+        $this->_tags_tokenized = explode(",", $this->_tags);
         return $this;
     }
 
     public function getTags()
     {
         return $this->_tags;
+    }
+
+    public function getTagsTokenized()
+    {
+        return $this->_tags_tokenized;
     }
 
     public function setCreated($created)

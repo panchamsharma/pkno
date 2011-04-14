@@ -56,19 +56,21 @@ class Application_Model_KnowledgeMapper
 
         if (null === ($id = $knowledge->getId())) {
             unset($data['id']);
-            $this->getDbTableKnowledge()->insert($data);
+            $knowledge_id = $this->getDbTableKnowledge()->insert($data);
         } else {
             $this->getDbTableKnowledge()->update($data, array('id = ?' => $id));
         }
 
-        if ($knowledge->getTags() != null) {
+        $tags = $knowledge->getTagsTokenized();
+        if (!is_null($tags)){
+            foreach($tags as $tag){
             $data_tags = array(
-               'knowledge_id' => "1",
-                'tag' => $knowledge->getTags(),
+               'knowledge_id' => $knowledge_id,
+                'tag' => $tag,
                 'created' => date('Y-m-d H:i:s'),
             );
-
             $this->getDbTableTags()->insert($data_tags);
+           }
         }
     }
 
@@ -88,6 +90,23 @@ class Application_Model_KnowledgeMapper
     public function fetchAll()
     {
         $resultSet = $this->getDbTableKnowledge()->fetchAll();
+        return $this->getKnowledgeArray($resultSet);
+    }
+
+    public function fetchRecent($count)
+    {
+        $dbTableKnowledge = $this->getDbTableKnowledge();
+
+        $resultSet = $dbTableKnowledge->fetchAll(
+                    $dbTableKnowledge->select()
+                                     ->order('modified DESC')
+                                      ->limit($count, 0)
+                );
+        return $this->getKnowledgeArray($resultSet);
+    }
+
+    protected function getKnowledgeArray($resultSet)
+    {
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new Application_Model_Knowledge();
@@ -99,6 +118,5 @@ class Application_Model_KnowledgeMapper
         }
         return $entries;
     }
-
 }
 

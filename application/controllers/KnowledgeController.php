@@ -31,7 +31,7 @@ class KnowledgeController extends Zend_Controller_Action
 
        //fetch current knowledge
        $mapper = new Application_Model_KnowledgeMapper();
-       $this->view->knowledge = $mapper->fetchAll();
+       $this->view->knowledge = $mapper->fetchRecent(10);
     }
 }
 

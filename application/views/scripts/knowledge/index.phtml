@@ -1,17 +1,28 @@
 <table>
 <tr>
-    <th>Add knowledge</th>
     <th>Recent items</th>
+    <th>Add knowledge</th>
 </tr>
 <tr>
     <td>
-        <?php echo $this->form; ?>
-    </td>
-    <td>
         <?php foreach($this->knowledge as $knowledge) : ?>
-            <br/><?php echo $this->escape($knowledge->knowledge);?>
+            <br/>
+                <?php
+                    $knowledge = $this->escape($knowledge->knowledge);
+                    if (strlen($knowledge) <= 100) {
+                       echo $knowledge;
+                    }
+                    else {
+                        $knowledge = wordwrap($knowledge, 100);
+                        $knowledge = substr($knowledge, 0, strpos($knowledge, "\n"));
+                        echo $knowledge . "...";
+                    }                    
+                ?>
         <?php endforeach; ?>
         <br/><hr/>Tag cloud
+    </td>
+    <td>
+        <?php echo $this->form; ?>
     </td>
 </tr>
 </table>
